@@ -1,0 +1,35 @@
+#!/usr/local/opt/ruby/bin/ruby
+
+raise "missing title" if ARGV.empty?
+
+URL_BASE = "https://leetcode.com/problems"
+title    = ARGV[0]                           # 543. Diameter of Binary Tree
+parts    = title.split('.')
+num      = parts[0].strip.rjust(4, '0')      # 0543
+text     = parts[1].strip                    # Diameter of Binary Tree
+hyphen   = text.downcase.gsub(' ', '-')      # diameter-of-binary-tree
+id       = "#{num}.#{hyphen}"
+pkg_dir  = "solutions/#{id}"                 # solutions/0543.diameter-of-binary-tree
+fn       = "#{pkg_dir}/#{id}.go"             # solutions/0543.diameter-of-binary-tree/0543.diameter-of-binary-tree.go
+
+
+############################################################
+# Generate new file
+############################################################
+
+content = %{
+// #{URL_BASE}/#{hyphen}/
+
+package solutions
+
+}
+
+if File.directory?(pkg_dir)
+    raise "'#{title}' already exists"  
+else
+    Dir.mkdir(pkg_dir)
+end
+
+File.open(fn, 'w') do |f|
+    f.puts(content)
+end
